@@ -1,0 +1,32 @@
+{
+  "name": "gcp_cache_helper",
+  "version": "1.0.0",
+  "description": "Cloud function to trigger Google Cache API",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^6.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "functions-framework --target=proceedCache"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/normankong/gcp_cache_helper.git"
+  },
+  "keywords": [
+    "GCP",
+    "Cache",
+    "Function",
+    "API"
+  ],
+  "author": "Norman K K Kong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/normankong/gcp_cache_helper/issues"
+  },
+  "homepage": "https://github.com/normankong/gcp_cache_helper#readme"
+}
