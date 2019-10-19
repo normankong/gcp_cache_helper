@@ -25,7 +25,7 @@ exports.proceedCache = (req, res) => {
     });
     return false;
   }
-  if (isValidRequest) {
+  if (!isValidRequest) {
     res.status(401).json({
       code: "409",
       message: "Bad Request"
@@ -63,7 +63,9 @@ exports.proceedCache = (req, res) => {
     if (action == "REMOVE") {
       cacheHelper().remove(type, key, value, (e, r) => handleResponse(res, e, r));
     }
+    return;
   }
+  //return res.header('Content-type', 'application/json').send("Unknown");
 }
 
 function isHandleRequest(req, res) {
@@ -82,20 +84,20 @@ function isHandleRequest(req, res) {
     data = req.body.data;
     authorization = req.headers.authorization
   }
-
+  console.log(`Request : ${req.method} ${type} ${key} ${action}`)
   if (!authHelper().verifyToken(authorization, identify)) return null;
 
   if (req.method == "GET") {
-    if (type != null) return false;
+    if (type == null) return false;
   } else if (req.method == "POST") {
-    if (type != null) return false;
-    if (key != null) return false;
+    if (type == null) return false;
+    if (key == null) return false;
 
     switch (type) {
       case "CREATE":
       case "APPEND":
       case "REMOVE":
-        if (data != null) return false;
+        if (data == null) return false;
         break;
       default:
         break;
@@ -107,8 +109,9 @@ function isHandleRequest(req, res) {
 
 function handleResponse(res, e, r) {
   let response = {
-    code: (r > 0) ? "000" : "099",
+    code: (r >= 0) ? "000" : "099",
     error: e
   }
-  return res.header('Content-type', 'application/json').send(JSON.stringify(response));
+  console.log(response);
+  return res.send(JSON.stringify(response));
 }
